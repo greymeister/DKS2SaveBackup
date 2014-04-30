@@ -39,10 +39,10 @@ namespace DKS2SaveBackup
         {
             watcher = new FileSystemWatcher();
             watcher.Path = filePath;
-            /* Watch for changes in LastAccess and LastWrite times, and
-           the renaming of files or directories. */
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
-               | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            // Watch for changes in LastWrite times 
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            // Only watch main save file
+            watcher.Filter = "*.sl2";            
             // Add event handlers.
             watcher.Changed += new FileSystemEventHandler(OnChanged);
             // Begin watching.
@@ -53,6 +53,21 @@ namespace DKS2SaveBackup
         {
             // Specify what is done when a file is changed, created, or deleted.
             Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
+            DispatchEvent(e);
         }
+
+        protected virtual void DispatchEvent(FileSystemEventArgs e)
+        {
+            EventHandler<SavedFileChangedEventArgs> handler = SavedFileChanged;
+            if (handler != null)
+            {
+                var args = new SavedFileChangedEventArgs();
+                args.fileEvent = e;
+                args.TimeReached = DateTime.Now;
+                handler(this, args);
+            }
+        }
+
+
     }
 }

@@ -76,13 +76,13 @@ namespace DKS2SaveBackup
 
         private void OnSaveFileChanged(object sender, SavedFileChangedEventArgs e)
         {
-            Console.WriteLine("The threshold of {0} was reached at {1}.", e.Threshold, e.TimeReached);
+            Console.WriteLine("File Changed at {0}.", e.TimeReached);
             saveFileBackupProcess.SaveFileChanged(e);
         }
 
         private void SaveClicked(object sender, EventArgs e)
         {
-            int previousNumberOfSaves = saveFileBackupProcess.getNumberOfSaves();
+            int previousNumberOfSaves = saveFileBackupProcess.NumberOfSaves;
             int newNumberOfSaves;
             try
             {
@@ -94,7 +94,7 @@ namespace DKS2SaveBackup
                 this.textBox1.Text = previousNumberOfSaves.ToString();
             }
 
-            saveFileBackupProcess.setNumberOfSaves(newNumberOfSaves);
+            saveFileBackupProcess.NumberOfSaves = newNumberOfSaves;
         }
     }
 }

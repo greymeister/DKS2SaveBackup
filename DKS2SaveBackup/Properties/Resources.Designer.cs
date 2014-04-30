@@ -59,5 +59,41 @@ namespace DKS2SaveBackup.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DARKSII0000.sl2.
+        /// </summary>
+        internal static string DARK_SOULS_2_SAVE_FILE {
+            get {
+                return ResourceManager.GetString("DARK_SOULS_2_SAVE_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \AppData\Roaming\DarkSoulsII\.
+        /// </summary>
+        internal static string DARK_SOULS_2_SAVEDIR {
+            get {
+                return ResourceManager.GetString("DARK_SOULS_2_SAVEDIR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HKEY_CURRENT_USER\\DKS2SaveBackup.
+        /// </summary>
+        internal static string REG_KEY_NAME {
+            get {
+                return ResourceManager.GetString("REG_KEY_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NUMBER_OF_SAVES.
+        /// </summary>
+        internal static string REG_VALUE_NAME {
+            get {
+                return ResourceManager.GetString("REG_VALUE_NAME", resourceCulture);
+            }
+        }
     }
 }
