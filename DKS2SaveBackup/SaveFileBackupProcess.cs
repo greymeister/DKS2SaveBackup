@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Win32;
 using System.IO;
+using System.Threading;
 
 namespace DKS2SaveBackup
 {
@@ -23,6 +24,7 @@ namespace DKS2SaveBackup
             get { return numberOfSaves; }
             set
             {
+                Logger.Log("{0} Updating number of saves from {1} to {2}", DateTime.Now, numberOfSaves, value);
                 numberOfSaves = value;
                 Registry.SetValue(keyName, NUMBER_OF_SAVES, numberOfSaves);
             }
@@ -51,20 +53,22 @@ namespace DKS2SaveBackup
         public void SaveFileChanged(SavedFileChangedEventArgs e)
         {
             lock (obj)
-            {
-                if (TwoMinutesSinceLastEvent(e.TimeReached))
+            {                
+                if (TimeElapsedSinceLastEvent(e.TimeReached))
                 {
+                    Logger.Log("{0} Backing up save updated at {1}", DateTime.Now, e.TimeReached);
                     FileSystemEventArgs fileEvent = e.fileEvent;
                     string saveFilePath = fileEvent.FullPath;
                     CreateBackupCopy(saveFilePath);
-                    lastFired = e.TimeReached;
+                    Thread.Sleep(5000);
+                    lastFired = DateTime.Now;
                 }
             }
         }
 
-        private bool TwoMinutesSinceLastEvent(DateTime eventTime)
+        private bool TimeElapsedSinceLastEvent(DateTime eventTime)
         {
-            return (eventTime - lastFired).TotalSeconds > 120;
+            return (eventTime - lastFired).TotalSeconds > 90;
         }
 
         protected void CreateBackupCopy(string saveFilePath)
@@ -88,7 +92,9 @@ namespace DKS2SaveBackup
 
         private void CopyFile(string saveFilePath, int lastSave)
         {
-             File.Copy(saveFilePath, saveFilePath + ".BAK." + lastSave, true);
+            var destinationPath = saveFilePath + ".BAK." + lastSave;
+            Logger.Log("{0} Writing to file at {1}", DateTime.Now, destinationPath);
+            File.Copy(saveFilePath, destinationPath, true);
         }
 
         private void UpdateLastSave(int lastSave)

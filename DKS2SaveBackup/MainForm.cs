@@ -50,18 +50,21 @@ namespace DKS2SaveBackup
         private void OnClick(object sender, EventArgs e)
         {
             Visible = true;
+            ShowInTaskbar = true; 
         }
 
         private void OnClose(object sender, FormClosingEventArgs e)
         {
             Visible = false;
+            ShowInTaskbar = false; // Remove from taskbar.
             e.Cancel = true; // this cancels the close event.
         }
 
         private void OnExit(object sender, EventArgs e)
         {
-            trayIcon.Visible = true;
+            trayIcon.Visible = false;
             saveFileWatcher.stopWatcher();
+            Logger.Log("{0} Exiting program", DateTime.Now);
             Dispose(true);
             Application.Exit();
         }
@@ -75,8 +78,7 @@ namespace DKS2SaveBackup
         }
 
         private void OnSaveFileChanged(object sender, SavedFileChangedEventArgs e)
-        {
-            Console.WriteLine("File Changed at {0}.", e.TimeReached);
+        {            
             saveFileBackupProcess.SaveFileChanged(e);
         }
 

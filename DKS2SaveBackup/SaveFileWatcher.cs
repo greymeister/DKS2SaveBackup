@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace DKS2SaveBackup
 {
@@ -31,7 +32,7 @@ namespace DKS2SaveBackup
             string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string darkSoulsRootDir = userProfilePath + DARK_SOULS_2_SAVEDIR;
             filePath = Directory.GetDirectories(darkSoulsRootDir).First();
-            Console.WriteLine("Path: " + filePath);
+            Logger.Log("{0} Dark Souls II Save Directory: {1}", DateTime.Now, filePath);
         }
 
         // Create a new FileSystemWatcher and set its properties.
@@ -52,7 +53,8 @@ namespace DKS2SaveBackup
         private void OnChanged(object source, FileSystemEventArgs e)
         {
             // Specify what is done when a file is changed, created, or deleted.
-            Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
+            //Logger.Log("{0} File Change Detected: {1} {2}", DateTime.Now, e.FullPath, e.ChangeType);
+            Thread.Sleep(5000);
             DispatchEvent(e);
         }
 

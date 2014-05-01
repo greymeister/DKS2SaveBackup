@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="SavedFileChangedEventArgs.cs" />
     <Compile Include="SaveFileBackupProcess.cs" />
     <Compile Include="SaveFileWatcher.cs" />

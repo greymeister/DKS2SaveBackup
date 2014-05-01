@@ -78,7 +78,7 @@ namespace DKS2SaveBackup
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Dark Souls Save Backup";
+            this.Text = "DKS2SaveBackup";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClose);
             this.ResumeLayout(false);
             this.PerformLayout();
